@@ -1,0 +1,661 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Wen Zhao, Android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="我们在写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，或者想实现一些customized的UI控件，这个时候经常会遇到各种各样没有任何想法的问题，这个时候就需要对Android中view绘制流程的内部工作原理有一个了解，我们这里不会讲太深，仅仅深入到能帮我们解决日常遇到的问题就够了。我总结了下面几点重要的知识点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 深入了解View的绘制过程">
+<meta property="og:url" content="http://zhaowen.io/2016/10/16/Android 深入了解View的绘制过程/index.html">
+<meta property="og:site_name" content="Wen">
+<meta property="og:description" content="我们在写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，或者想实现一些customized的UI控件，这个时候经常会遇到各种各样没有任何想法的问题，这个时候就需要对Android中view绘制流程的内部工作原理有一个了解，我们这里不会讲太深，仅仅深入到能帮我们解决日常遇到的问题就够了。我总结了下面几点重要的知识点。">
+<meta property="og:updated_time" content="2016-10-17T05:25:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 深入了解View的绘制过程">
+<meta name="twitter:description" content="我们在写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，或者想实现一些customized的UI控件，这个时候经常会遇到各种各样没有任何想法的问题，这个时候就需要对Android中view绘制流程的内部工作原理有一个了解，我们这里不会讲太深，仅仅深入到能帮我们解决日常遇到的问题就够了。我总结了下面几点重要的知识点。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://zhaowen.io/2016/10/16/Android 深入了解View的绘制过程/"/>
+
+  <title> Android 深入了解View的绘制过程 | Wen </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-85985372-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Wen</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">enjoy change, enjoy life</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 深入了解View的绘制过程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-16T22:13:16-07:00" content="2016-10-16">
+              2016-10-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/16/Android 深入了解View的绘制过程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/16/Android 深入了解View的绘制过程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们在写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，或者想实现一些customized的UI控件，这个时候经常会遇到各种各样没有任何想法的问题，这个时候就需要对Android中view绘制流程的内部工作原理有一个了解，我们这里不会讲太深，仅仅深入到能帮我们解决日常遇到的问题就够了。我总结了下面几点重要的知识点。<br><a id="more"></a><br>（一）Android中View的添加是树状结构。<br>Android添加View是按照一个树的结构添加的，这棵树的Root是一个叫DectorView的class，并且它是一个FrameLayout的子类。这也就是为什么如果你的最外面的layout如果是framelayout的话，可以在layout的xml文件中省略framelayout，用<merge> tag来代替。我们自己写layout一般都用xml来写，而且我们写的xml的结构也是树的结构，所以我们一般的layout就是下面这样的结构。</merge></p>
+<p>常见的setContentView()就是生成用户控制的根部的那个View，然后下面的都是通过LayoutInflater.inflate()来加载布局，生成View，并通过addView()一层一层的从上到下添加到树上。各个view之间的消息传递也是按照这个树形结构来传递的，或者向上，或者向下。</p>
+<p>（二）View、ViewGroup和Layout的关系<br>ViewGroup继承View，Layout继承ViewGroup。基本的UI类都是继承View类的，一个View在屏幕上可以占据一个矩形区域。ViewGroup是View的容器，负责对其中的多个View的管理，虽然ViewGroup继承View，但ViewGroup和View之间是组合的设计模式。Widget是一个包，包含了android内置的UI类，比如ListView, ImageView等，里面的类都继承View。下面这张图把这些关系说的很清楚。</p>
+<p>（三）View的绘制流程<br>每一个View的绘制过程都必须先后经历三个最主要的阶段，即onMeasure()、onLayout()和onDraw()。</p>
+<ol>
+<li>onMeasure()<br>每一个View都会在OnMeasure()这个方法里设置View的height和width。我们先看View里的源代码：<br>protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {<br> setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),<pre><code>getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+</code></pre>}<br>其中setMeasuredDimension()是决定这个View大小的代码，不管你之前如何设置这个view的height和width，如果你此处手动给了值，那么这个view最终的大小就以这个地方给的值为准。我们来看一个简单的例子：<br>public class MyView extends View {<pre><code>......
+</code></pre> @Override<br> protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {<pre><code>setMeasuredDimension(200, 200);
+</code></pre> }</li>
+</ol>
+<p>}<br>这样的话就把View默认的测量流程覆盖掉了，不管在布局文件中定义MyView这个视图的大小是多少，最终在界面上显示的大小都将会是200*200。<br>需要注意的是，在setMeasuredDimension()方法调用之后，我们才能使用getMeasuredWidth()和getMeasuredHeight()来获取视图测量出的宽高，以此之前调用这两个方法得到的值都会是0。但getWidth()或者getHeight()需要在onLayout()之后才能得到，我们下面马上讲到。<br>但如果想利用getWidth()或者getHeight()得到View的大小的时候，可以在当前View override onMeasure(), 并且在onMeasure()中调用完super.onMeasure()之后调用getWidth, 也可以在onLayout()或者onDraw()里调用都可以。<br>讲到这里我们可以说一下getWidth()和getMeasuredWidth()的区别。以上面的代码为例，如果在MyView里没有覆盖调用onMeasure()并人为setMeasuredDimension()，那么这两个方法返回的结果应该是一样的。但如果像我们上面给的例子那样，getWidth返回的结果将是200，即setMeasuredDimension()中设置的值，而getMeasuredWidth()返回的将是我们人为改变前的值，即没有覆盖调用onMeasure()时应该得到的值。</p>
+<ol>
+<li><p>onLayout()<br>measure过程结束后，视图的大小就已经测量好了，接下来就是layout的过程了。正如其名字所描述的一样，这个方法是用于给视图进行布局的，也就是确定视图的位置。<br>public void layout(int left, int top, int right, int bottom)<br>这个方法接收四个参数，分别代表着左、上、右、下的坐标，当然这个坐标是相对于当前视图的父视图而言的，如果某个view覆盖重写这个方法，就可以人为固定其位置。但一般某个view在屏幕上的具体位置都是其parent决定的，所以一般情况是，在父类的onLayout()里，调用子类的layout()函数，来固定子类的位置。<br>在onLayout()过程结束后，我们就可以调用getWidth()方法和getHeight()方法来获取视图的宽高了。那么getWidth()方法和getMeasureWidth()方法到底有什么区别呢？首先getMeasureWidth()方法在measure()过程结束后就可以获取到了，而getWidth()方法要在layout()过程结束后才能获取到。另外，getMeasureWidth()方法中的值是通过setMeasuredDimension()方法来进行设置的，而getWidth()方法中的值则是通过视图右边的坐标减去左边的坐标计算出来的。比如下面的代码：<br>@Override<br>protected void onLayout(boolean changed, int l, , int r, int b) {<br> if (getChildCount() &gt; 0) {</p>
+<pre><code>View childView = getChildAt(0);
+childView.layout(0, 0, 200, 200);
+</code></pre><p> }<br>}<br>这样getWidth()方法得到的值就是200 - 0 = 200，不会再和getMeasuredWidth()的值相同了。当然这种做法充分不尊重measure()过程计算出的结果，通常情况下是不推荐这么写的。通常情况下，这个方法都是写成下面这种,让两者保持一致：<br>@Override<br>protected void onLayout(boolean changed, int l, int t,</p>
+<pre><code>int r, int b) {
+</code></pre><p> for (int i = 0; i &lt; count; i++) {</p>
+<pre><code>View child = getChildAt(i);
+child.layout(childLeft, childTop,
+        childLeft + child.getMeasuredWidth(),
+        childTop + child.getMeasuredHeight());
+}
+</code></pre><p>}</p>
+</li>
+<li><p>onDraw()<br>measure和layout的过程都结束后，接下来就进入到draw的过程了.在这里才真正地开始对视图进行绘制。每个视图根据想要展示的内容来自行绘制,比如TextView、ImageView等类的源码，你会发现它们都有重写onDraw()这个方法，并且在里面执行了相当不少的绘制逻辑。绘制的方式主要是借助Canvas这个类，它会作为参数传入到onDraw()方法中，供给每个视图使用。Canvas这个类的用法非常丰富，基本可以把它当成一块画布，在上面绘制任意的东西,具体我们这里就不讲了。</p>
+</li>
+</ol>
+<p>Reference: <a href="http://blog.csdn.net/guolin_blog/article/details/16330267" target="_blank" rel="external">http://blog.csdn.net/guolin_blog/article/details/16330267</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/10/Android Manifest介绍/" rel="next" title="Android Manifest和XML的应用">
+                <i class="fa fa-chevron-left"></i> Android Manifest和XML的应用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/16/Android Listener Pattern/" rel="prev" title="Android 实现 listener： Observer pattern (观察者模式)">
+                Android 实现 listener： Observer pattern (观察者模式) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Wen Zhao" />
+          <p class="site-author-name" itemprop="name">Wen Zhao</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wen Zhao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'wen-blog';
+      var disqus_identifier = '2016/10/16/Android 深入了解View的绘制过程/';
+      var disqus_title = "Android 深入了解View的绘制过程";
+      var disqus_url = 'http://zhaowen.io/2016/10/16/Android 深入了解View的绘制过程/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
