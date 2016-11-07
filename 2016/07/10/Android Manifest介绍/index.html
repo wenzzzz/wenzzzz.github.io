@@ -90,12 +90,12 @@
 <meta property="og:url" content="http://zhaowen.io/2016/07/10/Android Manifest介绍/index.html">
 <meta property="og:site_name" content="Wen">
 <meta property="og:description" content="每个Android App都需要一个配置文件告诉它一些基本的信息，它在每个app源代码的根目录下，虽然这个文件一般不会被经常改到但每项设置都至关重要，这个文件就是AndroidManifest.xml文件。">
-<meta property="og:image" content="http://zhaowen.io/images/avatar.png">
-<meta property="og:updated_time" content="2016-11-04T04:41:18.000Z">
+<meta property="og:image" content="http://zhaowen.io/images/Four/project_structure.png">
+<meta property="og:updated_time" content="2016-11-07T05:03:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Manifest和XML的应用">
 <meta name="twitter:description" content="每个Android App都需要一个配置文件告诉它一些基本的信息，它在每个app源代码的根目录下，虽然这个文件一般不会被经常改到但每项设置都至关重要，这个文件就是AndroidManifest.xml文件。">
-<meta name="twitter:image" content="http://zhaowen.io/images/avatar.png">
+<meta name="twitter:image" content="http://zhaowen.io/images/Four/project_structure.png">
 
 
 
@@ -336,7 +336,7 @@
 <p>然后application又有一个子节点叫<code>activity</code>，<code>activity</code>就像是界面和用户之间所有交互的载体，比如界面的创建，用户动作的捕捉等活动。这里只定义了一个叫<code>com.example.MainActivity</code>的activity的基本信息，注意这个名字，说明在app的workspace下，一定要有一个叫<code>MainActivity.java</code>的文件在com.example这个package下。<code>screenOrientation</code>是定义了这个app是横屏展示还是竖屏展示，如果想知道都有哪些值可以选择，可以参考google的anrdoid文档。下面是一个<code>intent-filter</code>，作用主要是当本app被其他app打开时，系统知道去运行哪个activity，具体<code>intent-filter</code>的用法本入门教程就不介绍了。</p>
 <h1 id="XML在Android中的应用"><a href="#XML在Android中的应用" class="headerlink" title="XML在Android中的应用"></a>XML在Android中的应用</h1><p>首先，先看在上一篇文章里出现的代码：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">application</span></span></div><div class="line">    <span class="attr">android:icon</span>=<span class="string">"@drawable/logo"</span></div><div class="line">    <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></div><div class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span> &gt;</div><div class="line">......</div></pre></td></tr></table></figure></p>
 <p>看完上一篇文章我们都知道这三句话设置了我们app的<code>icon</code>，<code>label</code>和<code>theme</code>这三个属性，那么后面的赋值语句是什么意思呢？为什么是<code>@xxx/yyy</code>的格式？我们可以认为@后紧跟的是<a href="https://developer.android.com/guide/topics/resources/available-resources.html" target="_blank" rel="external">Resource Types</a>，<code>/</code>后面的是前面标签下叫那个名字的值。比如<code>@xxx/yyy</code>意思就是符合xxx类型并且名字叫yyy的Resource的值。我们看下面这张截图，某个android project的文件结构。</p>
-<p><img src="/images/avatar.png" alt="alt text"></p>
+<p><img src="/images/Four/project_structure.png" width="50%" height="100" align="left/"></p>
 <p>res文件夹下是这个project的所需的资源文件，包括各种图片、字符串、界面的布局设置等等，其他的比如src文件夹下存的是java源代码，gen文件夹下是res里的资源文件产生的让java能访问到的code，后面我们讲layout的时候会具体讲到。</p>
 <p>回到刚刚的问题上来，看这个截图，在values文件夹下有这么几个文件，一般colors.xml放的是自己定义的颜色，dimens.xml放的是各种size的大小具体值，strings.xml放的是string，styles放的就是layout的style文件，类似与css。我们看看strings.xml吧.</p>
 <p>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
