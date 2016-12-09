@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，尤其是在实现一些customized的UI控件的时候，但这个信息又经常得不到，这个时候就需要对Android中view绘制流程的内部工作原理有一个了解，其实并不难，只要掌握下面几点就可解决此类问题。">
+<meta name="description" content="写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，但这个信息又经常得不到，其实只要对Android中view绘制流程的内部工作原理有一个了解即可解决此类问题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 深入了解View的绘制过程">
 <meta property="og:url" content="http://zhaowen.io/2016/10/16/Android 深入了解View的绘制过程/index.html">
 <meta property="og:site_name" content="Wen">
-<meta property="og:description" content="写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，尤其是在实现一些customized的UI控件的时候，但这个信息又经常得不到，这个时候就需要对Android中view绘制流程的内部工作原理有一个了解，其实并不难，只要掌握下面几点就可解决此类问题。">
+<meta property="og:description" content="写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，但这个信息又经常得不到，其实只要对Android中view绘制流程的内部工作原理有一个了解即可解决此类问题。">
 <meta property="og:image" content="http://zhaowen.io/images/Four/decor_view.jpg">
 <meta property="og:image" content="http://zhaowen.io/images/Four/view_relation.gif">
-<meta property="og:updated_time" content="2016-11-18T05:53:25.000Z">
+<meta property="og:updated_time" content="2016-11-18T06:11:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 深入了解View的绘制过程">
-<meta name="twitter:description" content="写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，尤其是在实现一些customized的UI控件的时候，但这个信息又经常得不到，这个时候就需要对Android中view绘制流程的内部工作原理有一个了解，其实并不难，只要掌握下面几点就可解决此类问题。">
+<meta name="twitter:description" content="写Android App的时候，经常要获取或者改变各种layout或者view的宽度和高度，但这个信息又经常得不到，其实只要对Android中view绘制流程的内部工作原理有一个了解即可解决此类问题。">
 <meta name="twitter:image" content="http://zhaowen.io/images/Four/decor_view.jpg">
 
 
@@ -325,7 +325,7 @@
       
 
       
-        <p>写Android App的时候，经常要获取或者改变各种<code>layout</code>或者<code>view</code>的宽度和高度，尤其是在实现一些customized的UI控件的时候，但这个信息又经常得不到，这个时候就需要对Android中view绘制流程的内部工作原理有一个了解，其实并不难，只要掌握下面几点就可解决此类问题。<br><a id="more"></a></p>
+        <p>写Android App的时候，经常要获取或者改变各种<code>layout</code>或者<code>view</code>的宽度和高度，但这个信息又经常得不到，其实只要对Android中view绘制流程的内部工作原理有一个了解即可解决此类问题。<br><a id="more"></a></p>
 <h2 id="Android中View的添加是树状结构。"><a href="#Android中View的添加是树状结构。" class="headerlink" title="Android中View的添加是树状结构。"></a>Android中View的添加是树状结构。</h2><hr>
 <p>Android添加View是按照一个树的结构添加的，这棵树的Root是一个叫<code>DectorView</code>的class，并且它是一个<code>FrameLayout</code>的子类。这也就是为什么如果你的最外面的layout如果是<code>FrameLayout</code>的话，可以在layout的xml文件中省略<code>FrameLayout</code>，用<code>&lt;merge&gt;</code> tag来代替。一般写layout一般都用xml来写，而xml本身的结构就是树结构，两者在结构上不谋而合。一般layout就是下面这样的结构。</p>
 <p><img src="/images/Four/decor_view.jpg" width="60%"></p>
@@ -380,8 +380,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/10/16/Android Listener Pattern/" rel="prev" title="Android 实现 listener： Observer pattern (观察者模式)">
-                Android 实现 listener： Observer pattern (观察者模式) <i class="fa fa-chevron-right"></i>
+              <a href="/2016/10/16/Android Listener Pattern/" rel="prev" title="Android 实现 listener： Observer Pattern (观察者模式)">
+                Android 实现 listener： Observer Pattern (观察者模式) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
