@@ -82,12 +82,12 @@
 
 
 
-<meta name="description" content="用了三天的假期时间终于搭建了RESTful服务环境，代码不多主要时间都在踩坑，踩完坑赶紧记录下来造福后人。">
+<meta name="description" content="用了三天的假期时间终于搭建了RESTful服务环境，代码不多主要时间都在踩坑，踩完坑赶紧记录下来造福后人。本文涉及代码可从Github下载。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用Intellij和Tomcat实现RESTful服务(Jersey)并远程部署">
 <meta property="og:url" content="http://zhaowen.io/2017/01/01/IntelliJ Tomcat Jersey DigitalOcean/index.html">
 <meta property="og:site_name" content="Wen">
-<meta property="og:description" content="用了三天的假期时间终于搭建了RESTful服务环境，代码不多主要时间都在踩坑，踩完坑赶紧记录下来造福后人。">
+<meta property="og:description" content="用了三天的假期时间终于搭建了RESTful服务环境，代码不多主要时间都在踩坑，踩完坑赶紧记录下来造福后人。本文涉及代码可从Github下载。">
 <meta property="og:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/2_Creating_New _Project.png">
 <meta property="og:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/3_Adding_Maven_Support.png">
 <meta property="og:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/7_Tomcat.png">
@@ -100,10 +100,10 @@
 <meta property="og:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/6.4.5.png">
 <meta property="og:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/6.4.6.png">
 <meta property="og:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/6.4.7.png">
-<meta property="og:updated_time" content="2017-01-04T06:10:22.000Z">
+<meta property="og:updated_time" content="2017-01-04T06:30:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用Intellij和Tomcat实现RESTful服务(Jersey)并远程部署">
-<meta name="twitter:description" content="用了三天的假期时间终于搭建了RESTful服务环境，代码不多主要时间都在踩坑，踩完坑赶紧记录下来造福后人。">
+<meta name="twitter:description" content="用了三天的假期时间终于搭建了RESTful服务环境，代码不多主要时间都在踩坑，踩完坑赶紧记录下来造福后人。本文涉及代码可从Github下载。">
 <meta name="twitter:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/2_Creating_New _Project.png">
 
 
@@ -388,7 +388,7 @@
       
 
       
-        <p>用了三天的假期时间终于搭建了RESTful服务环境，代码不多主要时间都在踩坑，踩完坑赶紧记录下来造福后人。<br><a id="more"></a></p>
+        <p>用了三天的假期时间终于搭建了RESTful服务环境，代码不多主要时间都在踩坑，踩完坑赶紧记录下来造福后人。本文涉及代码可从<a href="https://github.com/wenzzzz/JerseyDemo/tree/e36fe6b07ba1ff49cbc024e111a8ab91c01ec5f9" target="_blank" rel="external">Github</a>下载。<br><a id="more"></a></p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><hr>
 <p>简单说一下背景，这次是心血来潮想搭建一个RESTful服务。一年前搭建过一个，当时是多人合作，不想代码deploy的太随意，所以当时的流程是：代码Review过了push到了GitHub，Github会自动同步服务器上的代码，最后自己再运行一个脚本，在服务器上compile并且deploy。但这次是自己用，想尽可能简化流程，我能想到的最简单的流程就是，在IDE里点击运行，然后代码自动deploy到远程服务器。然后这次的踩坑经历就朝着这个方向开始了。</p>
 <p>本地用的Mac开发，服务器用的DigitalOcean，IDE用的Intellij Ultimate版，所有软件和库都用的当时最新版(2017.1.1).</p>
