@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="Wen">
 <meta property="og:description" content="每个Android App都需要一个配置文件告诉它一些基本的信息，它在每个app源代码的根目录下，虽然这个文件一般不会被经常改到但每项设置都至关重要，这个文件就是AndroidManifest.xml文件。">
 <meta property="og:image" content="http://zhaowen.io/images/Four/project_structure.png">
-<meta property="og:updated_time" content="2016-11-16T06:37:40.000Z">
+<meta property="og:updated_time" content="2017-01-21T05:59:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Manifest和XML的应用">
 <meta name="twitter:description" content="每个Android App都需要一个配置文件告诉它一些基本的信息，它在每个app源代码的根目录下，虽然这个文件一般不会被经常改到但每项设置都至关重要，这个文件就是AndroidManifest.xml文件。">
@@ -398,6 +398,7 @@
 <h1 id="Intent-Filter"><a href="#Intent-Filter" class="headerlink" title="Intent Filter"></a>Intent Filter</h1><p>上节遗留的一个问题，就是在AndroidManifest.xml里，activity的标签下，有个intent-filter标签。Intent在android里是一个class，它的主要作用是用来创建app的核心组件（activity，services，broadcast receivers），这些核心组件要先用这些Intent声明自己自己的一些属性。这里举个简单的例子。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">"MainActivity"</span></div><div class="line">    <span class="attr">android:configChanges</span>=<span class="string">"orientation|screenSize|screenLayout"</span></div><div class="line">    &gt;</div><div class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>最常见的应该就是这两个了，一个是<code>action</code>, 这里设置成了<code>android.intent.action.MAIN</code>，意思是这个activity是一个主要进入点，不需要intent的其他信息就可以直接start。另一个是<code>category</code>，一般设成<code>CATEGORY_DEFAULT</code>，这样才能在java程序中用startActivity()调用。这里设成LAUNCHER是说这个app启动的时候就执行这个activity。具体其他的设置请参考安卓官方文档。</p>
 <p>其实如果app不需要和别的app交互，这个文件用到的并不多，但这些基本的知识也要知道，以后需要什么可以再查安卓的文档。</p>
+<p>转载请注明出处：<a href="http://zhaowen.io/2016/07/10/Android%20Manifest介绍/">http://zhaowen.io/2016/07/10/Android%20Manifest介绍/</a></p>
 
       
     </div>
@@ -509,7 +510,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/6.4.5.png">
 <meta property="og:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/6.4.6.png">
 <meta property="og:image" content="http://zhaowen.io/images/IntelliJ_Tomcat_Jersey_DigitalOcean/6.4.7.png">
-<meta property="og:updated_time" content="2017-01-14T06:37:12.000Z">
+<meta property="og:updated_time" content="2017-01-21T05:57:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用Intellij和Tomcat实现RESTful服务(Jersey)并远程部署">
 <meta name="twitter:description" content="用了三天的假期时间终于搭建了RESTful服务环境，代码不多主要时间都在踩坑，踩完坑赶紧记录下来造福后人。本文涉及代码可从Github下载。">
@@ -469,6 +469,7 @@
 <p><a href="https://youtrack.jetbrains.com/issue/IDEA-65343?projectKey=IDEA" target="_blank" rel="external">Add Option to Force Clean Artifact build</a></p>
 </blockquote>
 <p>Intellij中存放要deploy内容的文件夹(out文件夹)，竟然不会随着Rebuild Project清空，也就是说，Intellij会一直保存着你从一开始编译的类和添加过的dependency，并把它们一起放到服务器上！无故增加deploy负担不说，如果你升级了某个dependency，新旧版本会同时存在服务器上，必然会导致出错。Solution就是手动把out文件夹删掉。这个坑我踩了好久。。。</p>
+<p>转载请注明出处：<a href="http://zhaowen.io/2017/01/13/IntelliJ%20Tomcat%20Jersey%20DigitalOcean/">http://zhaowen.io/2017/01/13/IntelliJ%20Tomcat%20Jersey%20DigitalOcean/</a></p>
 
       
     </div>
@@ -584,7 +585,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

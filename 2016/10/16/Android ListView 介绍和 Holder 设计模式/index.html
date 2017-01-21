@@ -88,7 +88,7 @@
 <meta property="og:url" content="http://zhaowen.io/2016/10/16/Android ListView 介绍和 Holder 设计模式/index.html">
 <meta property="og:site_name" content="Wen">
 <meta property="og:description" content="在Android开发过程中ListView是一个非常常见的类，但是它的用法又和普通的TextView或ImageView不太一样，本篇介绍一下ListView的基本用法，以及实现过程中用到的Holder设计模式。">
-<meta property="og:updated_time" content="2016-12-30T07:36:11.000Z">
+<meta property="og:updated_time" content="2017-01-21T06:01:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android ListView 介绍和 Holder 设计模式">
 <meta name="twitter:description" content="在Android开发过程中ListView是一个非常常见的类，但是它的用法又和普通的TextView或ImageView不太一样，本篇介绍一下ListView的基本用法，以及实现过程中用到的Holder设计模式。">
@@ -390,6 +390,7 @@
 <p>好了，现在不明白的可能就是<code>getView()</code>里Holder模式的运用。在android编程中，<code>findViewById()</code>这种操作是很消耗时间的，而<code>getView()</code>会被非常频繁的调用到，所以不希望每次调用<code>getView()</code>时都运行<code>findViewById()</code>来找到相应的view。根据<code>ListView</code>的recycle原理，绝大部分view都是被回收利用的，所以完全可以在view里保存对其child view的引用，这样就不用每次都<code>findViewById</code>来找其child view了。</p>
 <p>Android里每个view都可以通过<code>setTag(Object tag)</code>来保存一个Object到view本身，可以每次新建view的时候把上面的child view通过<code>findViewById()</code>找到，然后把它们的reference存到这个view的tag里，比如上面的代码，每个item的view里都有两个<code>TextView</code>，就可以只在新建item view的时候通过findViewById来找到这两个<code>TextView</code>，然后存到这个item的tag里。然后当这个view再次被利用的时候，就不必再调用findViewById了，而是直接调用getTag来得到这两个<code>TextView</code>的reference。大家可以再看看上面getView()的代码来加深理解。这个存child view并传入<code>setTag()</code>的Object就成为Holder. Holder模式就是通过这种方式来提高app的运行效率。</p>
 <p>关于<code>ListView</code>就介绍到这里，如果有什么不明白的地方欢迎留言讨论。</p>
+<p>转载请注明出处：<a href="http://zhaowen.io/2016/10/16/Android%20ListView%20介绍和%20Holder%20设计模式/">http://zhaowen.io/2016/10/16/Android%20ListView%20介绍和%20Holder%20设计模式/</a></p>
 
       
     </div>
@@ -505,7 +506,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://zhaowen.io/images/MVP2/TasksDetail.png">
 <meta property="og:image" content="http://zhaowen.io/images/MVP2/AddEditTask.png">
 <meta property="og:image" content="http://zhaowen.io/images/MVP2/file_structure.png">
-<meta property="og:updated_time" content="2017-01-15T22:39:00.000Z">
+<meta property="og:updated_time" content="2017-01-21T05:55:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android MVP学习笔记 (中) - Google todo-mvp Demo">
 <meta name="twitter:description" content="对于 Android 上 MVP 的实现，Google 还是做了一些整理和总结的，并且给出了一些代码Demo，放在Android Architecture Blueprints内，这次看其中最基本的例子：TODO-MVP。">
@@ -436,11 +436,10 @@
 <p>When control goes from View to Presenter and then from Presenter to Model it is just a direct flow, it is easy to write code like this. You get an easy <strong>user -&gt; view -&gt; presenter -&gt; model -&gt; data</strong> sequence. But when control goes like this: <strong>user -&gt; view -&gt; presenter -&gt; view -&gt; presenter -&gt; model -&gt; data</strong>, it is just violates KISS principle. Don’t play ping-pong between your view and presenter.</p>
 </blockquote>
 <p>Open Question. 这里只要搞清楚这两种处理方法就可以了。</p>
-<h2 id="下节问题"><a href="#下节问题" class="headerlink" title="下节问题"></a>下节问题</h2><ol>
-<li>本Demo中的Model的实现有哪些特别的地方？</li>
-<li>MVP有什么优点？本Demo中如何体现的？</li>
-<li>MVP有什么问题？</li>
-</ol>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>Demo中Model在理解MVP的目的下，并没有什么特别的，但作者的实现思路是非常practical的，值得学习，看代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TasksRepository</span> <span class="keyword">implements</span> <span class="title">TasksDataSource</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TasksDataSource mTasksRemoteDataSource;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TasksDataSource mTasksLocalDataSource;</div><div class="line">    ...</div><div class="line">        <span class="comment">// Is the task in the local data source? If not, query the network.</span></div><div class="line">        mTasksLocalDataSource.getTask(taskId, <span class="keyword">new</span> GetTaskCallback() &#123;</div><div class="line">            ...</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDataNotAvailable</span><span class="params">()</span> </span>&#123;</div><div class="line">                mTasksRemoteDataSource.getTask(taskId, <span class="keyword">new</span> GetTaskCallback() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTaskLoaded</span><span class="params">(Task task)</span> </span>&#123;</div><div class="line">                        <span class="comment">// Do in memory cache update to keep the app UI up to date</span></div><div class="line">                        <span class="keyword">if</span> (mCachedTasks == <span class="keyword">null</span>) &#123;</div><div class="line">                            mCachedTasks = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</div><div class="line">                        &#125;</div><div class="line">                        mCachedTasks.put(task.getId(), task);</div><div class="line">                        callback.onTaskLoaded(task);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的<code>TasksRepository</code>就是Model类，所有对data的操作，比如获取task，都会先看local有没有，如果没有再去remote的服务器尝试获取，一个真实的todo app就是应该这样做的，这个demo实现的方方面面都是教科书一般的标准。</p>
+<h2 id="MVP其他实现"><a href="#MVP其他实现" class="headerlink" title="MVP其他实现"></a>MVP其他实现</h2><p>本文只是介绍MVP最简单的实现方法，其实MVP还有很多open question和各种各样的实现思路，这里不再做具体的深入探究，感兴趣的推荐阅读<a href="http://www.jianshu.com/p/9a6845b26856" target="_blank" rel="external">《Android MVP 详解》</a>。</p>
+<p>转载请注明出处：<a href="http://zhaowen.io/2017/01/13/Android_MVP_Learning_Notes_2/">http://zhaowen.io/2017/01/13/Android_MVP_Learning_Notes_2/</a></p>
 
       
     </div>
@@ -476,6 +475,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/16/Android_MVP_Learning_Notes_3/" rel="prev" title="Android MVP学习笔记 (下) - MVP和Tests">
+                Android MVP学习笔记 (下) - MVP和Tests <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -552,7 +555,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -598,7 +601,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#App功能和代码结构"><span class="nav-number">1.</span> <span class="nav-text">App功能和代码结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TasksActivity"><span class="nav-number">2.</span> <span class="nav-text">TasksActivity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Presenter"><span class="nav-number">3.</span> <span class="nav-text">Presenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">4.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下节问题"><span class="nav-number">5.</span> <span class="nav-text">下节问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#App功能和代码结构"><span class="nav-number">1.</span> <span class="nav-text">App功能和代码结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TasksActivity"><span class="nav-number">2.</span> <span class="nav-text">TasksActivity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Presenter"><span class="nav-number">3.</span> <span class="nav-text">Presenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">4.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">5.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVP其他实现"><span class="nav-number">6.</span> <span class="nav-text">MVP其他实现</span></a></li></ol></div>
             
 
           </div>
