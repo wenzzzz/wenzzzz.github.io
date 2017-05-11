@@ -82,18 +82,16 @@
 
 
 
-<meta name="description" content="通过对两个demo的分析，相信大家已经知道MVP是怎么回事了。那现在可以回过头来想想，说了这么久的MVP架构，这个架构到底有什么好处呢？">
+<meta name="description" content="现在Github里的Andorid Demo中随处可见Dagger2的身影，作者们已经开始默认读者朋友具备Dagger2的知识了，可是我还不具备啊，不过也不捉急，先学习一些简单实用的基本知识。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android MVP学习笔记 (下) - MVP和Tests">
-<meta property="og:url" content="http://zhaowen.io/post/Android_MVP_Learning_Notes_3/index.html">
+<meta property="og:title" content="Android Dagger2 学习笔记 (上) - 讲 Dagger 之前">
+<meta property="og:url" content="http://zhaowen.io/post/dagger2/index.html">
 <meta property="og:site_name" content="Wen">
-<meta property="og:description" content="通过对两个demo的分析，相信大家已经知道MVP是怎么回事了。那现在可以回过头来想想，说了这么久的MVP架构，这个架构到底有什么好处呢？">
-<meta property="og:image" content="http://zhaowen.io/post/Android_MVP_Learning_Notes_3/TestFolder.png">
-<meta property="og:updated_time" content="2017-03-19T21:20:42.000Z">
+<meta property="og:description" content="现在Github里的Andorid Demo中随处可见Dagger2的身影，作者们已经开始默认读者朋友具备Dagger2的知识了，可是我还不具备啊，不过也不捉急，先学习一些简单实用的基本知识。">
+<meta property="og:updated_time" content="2017-05-11T05:35:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android MVP学习笔记 (下) - MVP和Tests">
-<meta name="twitter:description" content="通过对两个demo的分析，相信大家已经知道MVP是怎么回事了。那现在可以回过头来想想，说了这么久的MVP架构，这个架构到底有什么好处呢？">
-<meta name="twitter:image" content="http://zhaowen.io/post/Android_MVP_Learning_Notes_3/TestFolder.png">
+<meta name="twitter:title" content="Android Dagger2 学习笔记 (上) - 讲 Dagger 之前">
+<meta name="twitter:description" content="现在Github里的Andorid Demo中随处可见Dagger2的身影，作者们已经开始默认读者朋友具备Dagger2的知识了，可是我还不具备啊，不过也不捉急，先学习一些简单实用的基本知识。">
 
 
 
@@ -121,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://zhaowen.io/post/Android_MVP_Learning_Notes_3/"/>
+  <link rel="canonical" href="http://zhaowen.io/post/dagger2/"/>
 
 
 
 
 
-  <title> Android MVP学习笔记 (下) - MVP和Tests | Wen </title>
+  <title> Android Dagger2 学习笔记 (上) - 讲 Dagger 之前 | Wen </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -259,7 +257,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://zhaowen.io/post/Android_MVP_Learning_Notes_3/">
+  <link itemprop="mainEntityOfPage" href="http://zhaowen.io/post/dagger2/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Wen Zhao">
@@ -283,7 +281,7 @@
             
             
               
-                Android MVP学习笔记 (下) - MVP和Tests
+                Android Dagger2 学习笔记 (上) - 讲 Dagger 之前
               
             
           </h1>
@@ -298,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-20T17:25:00-08:00">
-                2017-01-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-22T11:02:40-07:00">
+                2017-04-22
               </time>
             
 
@@ -339,8 +337,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/Android_MVP_Learning_Notes_3/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/Android_MVP_Learning_Notes_3/" itemprop="commentCount"></span>
+                <a href="/post/dagger2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/dagger2/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -350,7 +348,7 @@
 
           
           
-             <span id="/post/Android_MVP_Learning_Notes_3/" class="leancloud_visitors" data-flag-title="Android MVP学习笔记 (下) - MVP和Tests">
+             <span id="/post/dagger2/" class="leancloud_visitors" data-flag-title="Android Dagger2 学习笔记 (上) - 讲 Dagger 之前">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -377,23 +375,30 @@
       
 
       
-        <p>通过对两个demo的分析，相信大家已经知道MVP是怎么回事了。那现在可以回过头来想想，说了这么久的MVP架构，这个架构到底有什么好处呢？<br><a id="more"></a></p>
-<h2 id="MVP优点"><a href="#MVP优点" class="headerlink" title="MVP优点"></a>MVP优点</h2><hr>
-<p>MVP本质上是把业务逻辑和UI分的更彻底了，这样带来的好处有很多，比如结构更清晰，更好的拓展性，可复用性等，但我觉得最主要的一点，是<font color="#ab1942"><strong>方便写单元测试！</strong></font></p>
-<p>为什么MVP结构利于单元测试？这篇<a href="https://www.diycode.cc/topics/309" target="_blank" rel="external">文章</a>说的很好：</p>
+        <p>现在Github里的Andorid Demo中随处可见Dagger2的身影，作者们已经开始默认读者朋友具备Dagger2的知识了，可是我还不具备啊，不过也不捉急，先学习一些简单实用的基本知识。<br><a id="more"></a></p>
+<h2 id="依赖注入概念"><a href="#依赖注入概念" class="headerlink" title="依赖注入概念"></a>依赖注入概念</h2><hr>
+<p>开始介绍 Dagger 前还是想从基本概念说起，推荐阅读下面这篇文章，文中的概念本文也会简单介绍：</p>
 <blockquote>
-<p>MVP结构最大的特点是，P将逻辑和UI分开了。即P 中没有任何Android相关的代码，比如Toast啊、setText等等。这意味着~ 你可以针对Presenter写junit测试了。只对java代码的测试，不用涉及任何UI！！！不用运行模拟器的测试！！！！！速度起飞的测试！！！！！！！！</p>
+<p><a href="http://www.jianshu.com/p/cc1427e385b5" target="_blank" rel="external">使用Dagger2前你必须了解的一些设计原则</a></p>
 </blockquote>
-<p>下面还是以Google的<a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp/" target="_blank" rel="external">TODO-MVP</a>为例，看看在MVP模式下是如何写Unit Test的。</p>
-<h2 id="Google-Todo-中的Test"><a href="#Google-Todo-中的Test" class="headerlink" title="Google Todo 中的Test"></a>Google Todo 中的Test</h2><hr>
-<p>首先先说两句，Google的 Todo MVP App中包含了Test的方方面面，既有Unit Test (在<code>src/test</code>目录) 也有UI Test (在<code>src/androidTest</code>和<code>src/androidTestMock</code>目录)，可以当作学习Android Test的例子，感兴趣的推荐大家去看Android Codelab出品的<a href="https://codelabs.developers.google.com/codelabs/android-testing/#0" target="_blank" rel="external">Android Test</a>，写的非常详细，强势推荐。</p>
-<p>这里只看Unit Test，项目中所有的Unit Test都放在了<code>src/test</code>目录下，而且一个Presenter对应一个Test文件。<br><img src="/post/Android_MVP_Learning_Notes_3/TestFolder.png"><br>选取其中最熟悉的<code>TaskPresenter</code>对应的<code>TaskPresenterTest</code>出来，先看最简单的一个。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TasksPresenterTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Mock</span></div><div class="line">    <span class="keyword">private</span> TasksRepository mTasksRepository;</div><div class="line">    <span class="meta">@Mock</span></div><div class="line">    <span class="keyword">private</span> TasksContract.View mTasksView;</div><div class="line">    ...</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clickOnFab_ShowsAddTaskUi</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// When adding a new task</span></div><div class="line">        mTasksPresenter.addNewTask();</div><div class="line"></div><div class="line">        <span class="comment">// Then add task UI is shown</span></div><div class="line">        verify(mTasksView).showAddTask();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看到，这里用Unit Test的形式来验证逻辑正确非常简单，当Presenter上的<code>addNewTask()</code>被call到时，我只需要知道是不是call到View上的<code>showAddTask()</code>就可以了，而完全不用管View里面的具体实现，也自然不会调用到Android内部函数。再来看一个栗子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TasksPresenterTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadCompletedTasksFromRepositoryAndLoadIntoView</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// Given an initialized TasksPresenter with initialized tasks</span></div><div class="line">        <span class="comment">// When loading of Tasks is requested</span></div><div class="line">        mTasksPresenter.setFiltering(TasksFilterType.COMPLETED_TASKS);</div><div class="line">        mTasksPresenter.loadTasks(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">        <span class="comment">// Callback is captured and invoked with stubbed tasks</span></div><div class="line">        verify(mTasksRepository).getTasks(mLoadTasksCallbackCaptor.capture());</div><div class="line">        mLoadTasksCallbackCaptor.getValue().onTasksLoaded(TASKS);</div><div class="line"></div><div class="line">        <span class="comment">// Then progress indicator is hidden and completed tasks are shown in UI</span></div><div class="line">        verify(mTasksView).setLoadingIndicator(<span class="keyword">false</span>);</div><div class="line">        ArgumentCaptor&lt;List&gt; showTasksArgumentCaptor = ArgumentCaptor.forClass(List.class);</div><div class="line">        verify(mTasksView).showTasks(showTasksArgumentCaptor.capture());</div><div class="line">        assertTrue(showTasksArgumentCaptor.getValue().size() == <span class="number">2</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这个是测试当Customer想只显示已完成的任务的逻辑，理论上最好一个test case只cover一个函数，但这里运行了Presenter的两个函数，但这也是符合用户用这个app的流程，算是稍微特殊的一点吧。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
-<p>关于Unit Test这里就不做深入的讲解了，感兴趣的请看文中引用到的两个链接。关于MVP的学习到这里就到一段落了，希望能起到抛砖引玉的作用。</p>
-<p>转载请注明出处：<a href="http://zhaowen.io/post/Android_MVP_Learning_Notes_3/">http://zhaowen.io/post/Android_MVP_Learning_Notes_3/</a></p>
+<h3 id="依赖-dependency"><a href="#依赖-dependency" class="headerlink" title="依赖 (dependency)"></a>依赖 (dependency)</h3><p>在之前的文章《Android MVP学习笔记 (中) - Google todo-mvp Demo》中，介绍了<code>TasksPresenter</code>的代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TasksPresenter</span> <span class="keyword">implements</span> <span class="title">TasksContract</span>.<span class="title">Presenter</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TasksContract.View mTasksView;</div><div class="line">    ...</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addNewTask</span><span class="params">()</span> </span>&#123;</div><div class="line">        mTasksView.showAddTask();</div><div class="line">    &#125;</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p>那对于<code>TasksPresenter</code>来说，<code>mTasksView</code>就是它的依赖。</p>
+<h3 id="依赖反转原则（Dependency-inversion-principle，DIP）"><a href="#依赖反转原则（Dependency-inversion-principle，DIP）" class="headerlink" title="依赖反转原则（Dependency inversion principle，DIP）"></a>依赖反转原则（Dependency inversion principle，DIP）</h3><p>在这个关系中有个设计原则叫依赖反转原则，下面定义引用自<a href="https://zh.wikipedia.org/wiki/%E4%BE%9D%E8%B5%96%E5%8F%8D%E8%BD%AC%E5%8E%9F%E5%88%99" target="_blank" rel="external">维基百科</a>：</p>
+<blockquote>
+<p>在面向对象编程领域中，依赖反转原则（Dependency inversion principle，DIP）是指一种特定的解耦（传统的依赖关系创建在高层次上，而具体的策略设置则应用在低层次的模块上）形式，使得高层次的模块不依赖于低层次的模块的实现细节，依赖关系被颠倒（反转），从而使得低层次模块依赖于高层次模块的需求抽象。<br>该原则规定：</p>
+<ol>
+<li>高层次的模块不应该依赖于低层次的模块，两者都应该依赖于抽象接口。</li>
+<li>抽象接口不应该依赖于具体实现。而具体实现则应该依赖于抽象接口。</li>
+</ol>
+</blockquote>
+<p>其实就是说，依赖关系中要通过抽象接口来连接高层次模块和低层次模块，而且接口的设计是和具体实现无关的。上面这个例子中，<code>TasksPresenter</code>是高层次模块，<code>mTasksView</code>是低层次模块，这里也是用了<code>TasksContract.View</code>这个接口来连接两者。这样的好处是如果之后需要换一个<code>View</code>，只需要让新的<code>View</code>实现同样的接口就好了，而不需要大改<code>TasksPresenter</code>里的代码。</p>
+<h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><p>知道了依赖的概念，和要通过接口来连接依赖关系，那什么是依赖注入呢？它说的是：<font color="#ab1942"><strong>得到依赖的引用的方式</strong></font>。前面说了，依赖在类中应该是以接口的形式存在，那么它的实现类的初始化发生在哪里呢？不在当前类里面初始化具体的依赖实现类，而是外部初始化好并传入当前类，这就是依赖注入。</p>
+<p>依赖注入的好处是，当依赖的具体实现类发生改变的时候，就彻底不用改依赖的引用类了，因为在依赖的引用类里面完全没有对依赖具体实现类的引用。</p>
+<p>最简单的两种依赖注入实现方式，一种是<code>Constructor Injection</code>, 即在构造函数中传入依赖。还是上面那段代码，来看<code>mTasksView</code>在<code>TasksPresenter</code>类里的引用得到过程：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TasksPresenter</span> <span class="keyword">implements</span> <span class="title">TasksContract</span>.<span class="title">Presenter</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TasksContract.View mTasksView;</div><div class="line">    ...</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TasksPresenter</span><span class="params">(@NonNull TasksRepository tasksRepository, @NonNull TasksContract.View tasksView)</span> </span>&#123;</div><div class="line">        mTasksView = checkNotNull(tasksView, <span class="string">"tasksView cannot be null!"</span>);</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>第二种是<code>Setting Injection</code>，即通过<code>setter</code>传入引用。看<code>Presenter</code>在<code>TasksFragment</code>类里的引用得到过程：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TasksFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> <span class="keyword">implements</span> <span class="title">TasksContract</span>.<span class="title">View</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> TasksContract.Presenter mPresenter;</div><div class="line">    ...</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPresenter</span><span class="params">(@NonNull TasksContract.Presenter presenter)</span> </span>&#123;</div><div class="line">        mPresenter = checkNotNull(presenter);</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Dagger2 也是依赖注入的其中一种形式，下一篇文章再学习其相关知识。</p>
+<p>转载请注明出处：<a href="http://zhaowen.io/post/dagger2/">http://zhaowen.io/post/dagger2/</a></p>
 
       
     </div>
@@ -420,8 +425,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/Android_MVP_Learning_Notes_2/" rel="next" title="Android MVP学习笔记 (中) - Google todo-mvp Demo">
-                <i class="fa fa-chevron-left"></i> Android MVP学习笔记 (中) - Google todo-mvp Demo
+              <a href="/post/wechat_backend_jersey/" rel="next" title="Jersey实现微信公众号服务器">
+                <i class="fa fa-chevron-left"></i> Jersey实现微信公众号服务器
               </a>
             
           </div>
@@ -429,10 +434,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/wechat_backend_jersey/" rel="prev" title="Jersey实现微信公众号服务器">
-                Jersey实现微信公众号服务器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -555,7 +556,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVP优点"><span class="nav-number">1.</span> <span class="nav-text">MVP优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Google-Todo-中的Test"><span class="nav-number">2.</span> <span class="nav-text">Google Todo 中的Test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖注入概念"><span class="nav-number">1.</span> <span class="nav-text">依赖注入概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖-dependency"><span class="nav-number">1.1.</span> <span class="nav-text">依赖 (dependency)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖反转原则（Dependency-inversion-principle，DIP）"><span class="nav-number">1.2.</span> <span class="nav-text">依赖反转原则（Dependency inversion principle，DIP）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖注入"><span class="nav-number">1.3.</span> <span class="nav-text">依赖注入</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -686,9 +687,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'wen-blog';
-      var disqus_identifier = 'post/Android_MVP_Learning_Notes_3/';
+      var disqus_identifier = 'post/dagger2/';
 
-      var disqus_title = "Android MVP学习笔记 (下) - MVP和Tests";
+      var disqus_title = "Android Dagger2 学习笔记 (上) - 讲 Dagger 之前";
 
 
       function run_disqus_script(disqus_script) {
